@@ -2,6 +2,7 @@
 
 var path = require("path");
 // load modules
+const cors =require('cors');
 const express = require('express');
 const morgan = require('morgan');
 const routes=require('./routes')
@@ -23,7 +24,7 @@ const dbModule = require("./models");
 const sequelize = dbModule.sequelize;
 const models = dbModule.models;
 
-
+app.use(cors());
 app.use(express.json());
 app.use('/api',routes);
 
