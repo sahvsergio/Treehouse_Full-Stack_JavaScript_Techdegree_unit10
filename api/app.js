@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 const dbModule = require("./models");
 const sequelize = dbModule.sequelize;
 const models = dbModule.models;
-
+// Enable all CORS requests 
 app.use(cors());
 app.use(express.json());
 app.use('/api',routes);
