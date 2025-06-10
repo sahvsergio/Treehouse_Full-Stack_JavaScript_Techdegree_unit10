@@ -1,4 +1,5 @@
 import React from 'react'
+import Nav from './Nav'; 
 
 
 
@@ -12,12 +13,7 @@ const Header=()=>{
                 <div className="wrap header--flex" >
                     <h1 className="header--logo">  Courses
                     </h1>
-                    <nav>
-                        <ul class="header--signedout">
-                            <li><a href="sign-up.html">Sign Up</a></li>
-                            <li><a href="sign-in.html">Sign In</a></li>
-                        </ul>
-                    </nav>
+                    <Nav/>
 
               
                  </div>

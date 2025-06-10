@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 
 import Header from './components/Header'
+import Courses from './components/Courses'
 
 
 
@@ -10,22 +11,22 @@ import Header from './components/Header'
 
 
 
-
-function App() {
-
-
-  return (<>
-<Header/>
-<Routes>
-  <Route path='/' element={<Courses/>}/>
+const App = () => {
 
 
-</Routes>
-  
-</>
+  return (<BrowserRouter>
+    <Header />
 
-)
-    
+    <Routes>
+      <Route path='/' element={<Courses />} />
+
+
+    </Routes>
+
+  </BrowserRouter>
+
+  )
+
 }
 
 export default App
