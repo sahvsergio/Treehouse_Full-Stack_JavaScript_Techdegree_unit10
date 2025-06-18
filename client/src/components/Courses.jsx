@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react'
+import { api } from '../apiHelper'
 
 
 
 const Courses = () => {
-    
-       
-    
-   
+    async function getCourses(){
+        course= await api('/courses')
+        console.log(course);
+    }
+
+ 
+
 
     return (
+        
+            
+    
         <main>
             <div className="wrap main--grid">
                 <a className="course--module course--link" href="course-detail.html">
@@ -24,11 +31,8 @@ const Courses = () => {
                 </a>
             </div>
         </main>
+)}
 
-
-
-    )
-}
 
 {/*
 
