@@ -16,12 +16,19 @@ import Courses from './components/Courses'
 
 const App = () => {
   const [user, setUser]=useState(null);
-  
+ 
   
 
 
   return (
-    <UserContext.Provider value={{user:user}} >  <BrowserRouter>
+    <UserContext.Provider value={
+      {
+      user:user,
+
+    }
+    
+    }> 
+     <BrowserRouter>
         {console.log(UserContext)}
         <Header />
 

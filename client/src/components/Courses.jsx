@@ -4,12 +4,6 @@ import { api } from '../apiHelper'
 
 
 const Courses = () => {
-    async function getCourses(){
-        course= await api('/courses')
-        console.log(course);
-    }
-
- 
 
 
     return (
