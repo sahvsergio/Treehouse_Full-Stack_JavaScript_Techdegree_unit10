@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import UserContext from './context/UserContext'
 import Header from './components/Header'
 import Courses from './components/Courses'
+import { api } from './apiHelper'
 
 
 
@@ -17,6 +18,10 @@ import Courses from './components/Courses'
 const App = () => {
   const [user, setUser]=useState(null);
  
+  let courses=()=>{
+    api('courses ').then(response=>console.log(response))
+  };
+
   
 
 
@@ -24,16 +29,17 @@ const App = () => {
     <UserContext.Provider value={
       {
       user:user,
+      courses:courses
 
     }
     
     }> 
      <BrowserRouter>
-        {console.log(UserContext)}
+    
         <Header />
 
         <Routes>
-          <Route path='/' element={<Courses />} />
+          <Route path='/' element={<Courses data={courses} />} />
 
 
 

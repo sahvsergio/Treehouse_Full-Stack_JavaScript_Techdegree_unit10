@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { api } from '../apiHelper'
-
-
+import { useContext } from 'react'
+import UserContext from '../context/UserContext'
 
 const Courses = () => {
+    let courses=useContext(UserContext);
+    console.log(courses);
+    
 
+        
 
     return (
+      
         
-            
-    
         <main>
             <div className="wrap main--grid">
                 <a className="course--module course--link" href="course-detail.html">
