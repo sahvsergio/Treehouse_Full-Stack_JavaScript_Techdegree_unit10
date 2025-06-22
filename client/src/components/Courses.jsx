@@ -23,7 +23,7 @@ const Courses = () => {
                     <p>Loading courses or none available...</p>
                 )}
 
-                <Link to="/create-course" className="course--module course--add--module">
+                <Link to="/courses/create" className="course--module course--add--module">
                     <span className="course--add--title">
                         <svg
                             version="1.1"

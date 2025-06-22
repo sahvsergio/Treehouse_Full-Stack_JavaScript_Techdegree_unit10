@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import UserContext from './context/UserContext'
 import Header from './components/Header'
 import Courses from './components/Courses'
+import CourseDetail from './components/CourseDetail'
 import { api } from './apiHelper'
 
 
@@ -47,6 +48,8 @@ const App = () => {
 
         <Routes>
           <Route path='/' element={<Courses/>} />
+          <Route path='/courses/:id' element={<CourseDetail/>} />
+          
 
 
 
