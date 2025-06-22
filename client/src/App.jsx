@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState ,useEffect} from 'react'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 
 
@@ -17,10 +17,17 @@ import { api } from './apiHelper'
 
 const App = () => {
   const [user, setUser]=useState(null);
+  const [courses,setCourses]=useState([])
+
+  useEffect(()=>{
+    api('/courses').then(response => response.json())
+      .then(data => setCourses(data))
+      .catch(error => console.error('Failed to fetch courses:', error));
+  }, []);
+
+
  
-  let courses=()=>{
-    api('courses ').then(response=>console.log(response))
-  };
+  
 
   
 
@@ -39,7 +46,7 @@ const App = () => {
         <Header />
 
         <Routes>
-          <Route path='/' element={<Courses data={courses} />} />
+          <Route path='/' element={<Courses/>} />
 
 
 
