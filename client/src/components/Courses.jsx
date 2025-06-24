@@ -1,9 +1,26 @@
-import React, { useContext } from 'react';
-import UserContext from '../context/UserContext';
+import React, { useContext, useEffect, useState } from 'react';
+
+import { api } from '../apiHelper';
 import { Link } from 'react-router-dom';
 
 const Courses = () => {
-    const { courses } = useContext(UserContext);
+    const [courses, setCourses] = useState(null);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+            api(`/courses`)
+                .then(res => res.json())
+                .then(data => setCourses(data))
+                .catch(err => {
+                    console.error('Failed to load courses info:', err);
+                    setError('Error loading courses');
+                });
+        }, [courses]);
+    
+        if (error) return <p>{error}</p>;
+        if (!courses) return <p>Loading...</p>;
+
+
+   
 
     return (
         <main>
