@@ -5,11 +5,21 @@ import { api } from "../apiHelper";
 
 
 const UserSignUp= ()=>{
+  const handleSubmit=async(event)=>{
+    event.preventDefault();
+    const user={
+      firstName:firstName.current.value
+      lastName:lastName.current.value,
+      email:email.current.value,
+      password:password.current.value
+    }
+
+  }
     return(
         <main>
             <div className="form-centered">
                 <h2>Sign Up</h2>
-                <form>
+                <form onSubmit={(event) => handleSubmit(event)} >
                     <label for="firstName"></label> 
                     <input id="firstName" name="firstName" type="text" value="" />
                   <label for="lastName"></label>

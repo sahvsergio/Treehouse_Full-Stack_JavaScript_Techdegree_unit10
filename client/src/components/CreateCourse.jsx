@@ -1,6 +1,7 @@
 import React from "react";
 
 const CreateCourse = () => {
+    
     return (
     <main>
             <div class="wrap">
