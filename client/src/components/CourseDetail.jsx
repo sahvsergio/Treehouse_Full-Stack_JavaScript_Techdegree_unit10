@@ -44,7 +44,7 @@ const CourseDetail = () => {
                             <h4 className="course--name">{course.title}</h4>
                             <p>By {course.User?.firstName} {course.User?.lastName}</p>
 
-                            <p>{course.description}</p>
+                            <ReactMarkdown>{course.description}</ReactMarkdown>
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
@@ -52,9 +52,7 @@ const CourseDetail = () => {
 
                             <h3 className="course--detail--title">Materials Needed</h3>
                             <ul className="course--detail--list">
-                                {course.materialsNeeded?.split('\n').map((item, index) => (
-                                    <li key={index}>{item.trim()}</li>
-                                )) || <li>None listed</li>}
+                                <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
                             </ul>
                         </div>
                     </div>
