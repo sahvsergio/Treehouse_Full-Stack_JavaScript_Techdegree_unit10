@@ -1,44 +1,29 @@
-import { useState ,useEffect} from 'react'
+
+import React from 'react'
+import { useState} from 'react'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 
-
+//context 
 
 import UserContext from './context/UserContext'
-import Header from './components/Header'
-import Courses from './components/Courses'
-import CourseDetail from './components/CourseDetail'
-import { api } from './apiHelper'
 
-
-
-
-
+// Components 
+import Header from './components/Header';
+import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
+import  CreateCourse from './components/CreateCourse';
 
 
 
 const App = () => {
   const [user, setUser]=useState(null);
-  const [courses,setCourses]=useState([])
-
-  useEffect(()=>{
-    api('/courses').then(response => response.json())
-      .then(data => setCourses(data))
-      .catch(error => console.error('Failed to fetch courses:', error));
-  }, []);
-
-
- 
-  
-
-  
 
 
   return (
     <UserContext.Provider value={
       {
       user:user,
-      courses:courses
-
+     
     }
     
     }> 
@@ -49,6 +34,9 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Courses/>} />
           <Route path='/courses/:id' element={<CourseDetail/>} />
+          <Route path='/courses/create' element={<CreateCourse />} />
+          
+
           
 
 
