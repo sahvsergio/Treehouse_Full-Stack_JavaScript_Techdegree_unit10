@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
+
+
 import { useParams, Link } from 'react-router-dom';
+
+import ReactMarkdown from 'react-markdown';
+
 import { api } from '../apiHelper';
 
 const CourseDetail = () => {
@@ -37,7 +42,7 @@ const CourseDetail = () => {
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
-                            <p>By {course.user?.firstName} {course.user?.lastName}</p>
+                            <p>By {course.User?.firstName} {course.User?.lastName}</p>
 
                             <p>{course.description}</p>
                         </div>
