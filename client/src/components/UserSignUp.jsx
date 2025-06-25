@@ -1,35 +1,81 @@
-import {useContext, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 import { api } from "../apiHelper";
 
-
 const UserSignUp= ()=>{
-  const handleSubmit=async(event)=>{
+  const firstName=useRef(null);
+  const lastName=useRef(null);
+  const email=useRef(null);
+  const password=useRef(null);
+  const[errors, setErrors]=useState([]);
+
+  const handleSubmit=(event)=>{
+
     event.preventDefault();
     const user={
-      firstName:firstName.current.value
+      firstName:firstName.current.value,
       lastName:lastName.current.value,
-      email:email.current.value,
+      emailAddress:email.current.value,
       password:password.current.value
     }
+    
+   const response= api('/users','POST',user );
+   response.then((responseData)=>{
+    if (responseData.status===201){
+      console.log(`${user.firstName} ${user.lastName} is succesfully signed up and authenticated!`);
 
+    }
+    else if(responseData.status===400){
+      const data =responseData.json();
+      setErrors(data.errors);
+
+    }
+   })
+
+  
+  
   }
+  const navigate=useNavigate()
+  const handleCancel=(event)=>{
+    event.preventDefault();
+    navigate('/')
+    
+  }
+
     return(
         <main>
-            <div className="form-centered">
+            <div className="form--centered">
                 <h2>Sign Up</h2>
-                <form onSubmit={(event) => handleSubmit(event)} >
-                    <label for="firstName"></label> 
-                    <input id="firstName" name="firstName" type="text" value="" />
-                  <label for="lastName"></label>
-                    <input id="lastName" name="lastName" type="text" value="" />
-                  <label for="emailAddress"></label>
-                    <input id="emailAddress" name="emailAddress" type="email" value="" />
-                  <label for="password"></label>
-                    <input id="password" name="password" type="password" value="" />
-                    <button class="button" type="submit">Sign Up</button>
-                    <button class="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                <form  onSubmit={handleSubmit}>
+                    <label htmlFor="firstName">First Name</label> 
+                    <input 
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    ref={firstName}/>
+
+                  <label htmlFor="lastName">Last Name </label>
+                    <input 
+                    id="lastName" 
+                    name="lastName"
+                    type="text"
+                    ref={lastName} />
+                  <label htmlFor="emailAddress">Email Address </label>
+                    <input 
+                    id="emailAddress" 
+                    name="emailAddress" 
+                    type="email"
+                    ref={email} />
+                  <label htmlFor="password">Password</label>
+                    <input 
+                    id="password"
+                    name="password"
+                    type="password"
+                    ref={password} />
+                    <button className="button" type="submit">Sign Up</button>
+                    <button  type="button" className="button button-secondary" onClick={handleCancel} >Cancel</button>
                 </form>
                 <p> Already have an account? Click Here to <a href="sign-in.html"> sign in </a></p>
             </div>

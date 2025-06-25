@@ -1,6 +1,6 @@
 import Reac from "react"
 
-const UserSignin=()=>{
+const UserSignIn=()=>{
     return(<>
        <main>
         <div className="form--centered">
@@ -21,4 +21,4 @@ const UserSignin=()=>{
     </>
     )}
 
-export default UserSignin;
+export default UserSignIn;
