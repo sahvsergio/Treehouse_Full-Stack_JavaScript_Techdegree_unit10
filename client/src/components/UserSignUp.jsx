@@ -1,5 +1,5 @@
 import {useRef, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 import { api } from "../apiHelper";
@@ -12,7 +12,7 @@ const UserSignUp= ()=>{
   const[errors, setErrors]=useState([]);
   const navigate = useNavigate()
 
-  const handleSubmit= async (event)=>{
+  const handleSubmit= (event)=>{
 
     event.preventDefault();
     
@@ -23,7 +23,7 @@ const UserSignUp= ()=>{
       password:password.current.value
     }
     try{ 
-      response= api('/users','POST',user );
+      let response= api('/users','POST',user );
       response.then((responseData)=>{
 
         if (responseData.status===201){
@@ -44,13 +44,12 @@ const UserSignUp= ()=>{
     console.log(error);
       navigate('/error');
   }
+}
   
 
 
    
-
   
-
   
   const handleCancel=(event)=>{
     event.preventDefault();
@@ -100,11 +99,12 @@ const UserSignUp= ()=>{
                     <button className="button" type="submit">Sign Up</button>
                     <button  type="button" className="button button-secondary" onClick={handleCancel} >Cancel</button>
                 </form>
-                <p> Already have an account? Click Here to <a href="sign-in.html"> sign in </a></p>
+                <p> Already have an account? Click Here to <Link to="/signin" > sign in </Link></p>
             </div>
         </main>
         )
 }
+
 
 
 export default UserSignUp;
