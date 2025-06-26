@@ -10,37 +10,48 @@ const UserSignUp= ()=>{
   const email=useRef(null);
   const password=useRef(null);
   const[errors, setErrors]=useState([]);
+  const navigate = useNavigate()
 
   const handleSubmit= async (event)=>{
 
     event.preventDefault();
+    
     const user={
       firstName:firstName.current.value,
       lastName:lastName.current.value,
       emailAddress:email.current.value,
       password:password.current.value
     }
-    
-   const response= api('/users','POST',user );
-   response.then((responseData)=>{
-    if (responseData.status===201){
-      console.log(`${user.firstName} ${user.lastName} is succesfully signed up and authenticated!`);
+    try{ 
+      response= api('/users','POST',user );
+      response.then((responseData)=>{
 
-    }
-    else if(responseData.status===400){
-      const data = responseData.json();
-      data.then((errorList)=>{
-        setErrors(errorList.errors);
+        if (responseData.status===201){
+          console.log(`${user.firstName} ${user.lastName} is succesfully signed up and authenticated!`);
+        }
 
+        else if(responseData.status===400){
+          const data = responseData.json();
+          data.then((errorList)=>{
+            setErrors(errorList.errors);
       })
-
     }
-   })
+    else{
+      throw new Error();
+    }
+  })}
+  catch(error){
+    console.log(error);
+      navigate('/error');
+  }
+  
+
+
+   
 
   
+
   
-  }
-  const navigate=useNavigate()
   const handleCancel=(event)=>{
     event.preventDefault();
     navigate('/')
