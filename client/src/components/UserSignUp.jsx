@@ -11,7 +11,7 @@ const UserSignUp= ()=>{
   const password=useRef(null);
   const[errors, setErrors]=useState([]);
 
-  const handleSubmit=(event)=>{
+  const handleSubmit= async (event)=>{
 
     event.preventDefault();
     const user={
@@ -28,8 +28,11 @@ const UserSignUp= ()=>{
 
     }
     else if(responseData.status===400){
-      const data =responseData.json();
-      setErrors(data.errors);
+      const data = responseData.json();
+      data.then((errorList)=>{
+        setErrors(errorList.errors);
+
+      })
 
     }
    })
@@ -48,6 +51,15 @@ const UserSignUp= ()=>{
         <main>
             <div className="form--centered">
                 <h2>Sign Up</h2>
+                {errors.length?(
+                  <div className="validation--errors">
+                    <h3 className="validation--errors">Validation errors</h3>
+                    <ul className="validation--errors">
+                {errors.map((error, i) => <li className="validation--errors" key={i}>{error}</li>)}
+                    </ul>
+                  </div>
+                  
+                ):(null)}
                 <form  onSubmit={handleSubmit}>
                     <label htmlFor="firstName">First Name</label> 
                     <input 
