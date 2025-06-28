@@ -12,15 +12,16 @@ const Nav=()=>{
             <ul className="header--signedout">
         {
                
-            user?(<>                <li><a href="sign-up.html">Sign Up</a></li>
-        <li><a href="sign-in.html">Sign In</a></li>):
-                    </>):(
-                        <><li><a href="sign-up.html">Sign Up</a></li>
-<li><a href="sign-in.html">Sign In</a></li>
-                        </>
-                    )
-
-        }
+            user?(<>
+            <li><NavLink to="/signup">Sign Up</NavLink></li>
+            <li><NavLink to="signin">Sign In</NavLink></li>):
+            </>):(
+            <>
+            <li><NavLink to="/signup">Sign Up</NavLink></li>
+            <li><NavLink to="/signin">Sign In</NavLink></li>
+            </>
+            )
+}
 </ul>
     
 </nav>

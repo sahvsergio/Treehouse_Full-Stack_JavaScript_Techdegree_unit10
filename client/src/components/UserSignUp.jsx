@@ -27,7 +27,7 @@ const UserSignUp= ()=>{
       response.then((responseData)=>{
 
         if (responseData.status===201){
-          console.log(`${user.firstName} ${user.lastName} is succesfully signed up and authenticated!`);
+          navigate('/');
         }
 
         else if(responseData.status===400){
