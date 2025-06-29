@@ -10,41 +10,52 @@ const UserSignIn=()=>{
     const email = useRef(null);
     const password = useRef(null);
      const[errors, setErrors]=useState([]);
-    const handleSubmit= (event )=>{
+    const handleSubmit=  (event )=>{
         event.preventDefault();
         const credentials={
             emailAddress: email.current.value,
             password: password.current.value
 
         }
-    try{ 
-          let response= api('/users','GET',user );
-          response.then((responseData)=>{
-    
+
+         try{
+          
+           let response = api('/users', 'GET', null, credentials);
+           response.then((responseData)=>{
+            if(responseData){
             if (responseData.status===200){
-              responseData.then((userData)=>{
-
-                let user=userData.json()
-                console.log(user)
-              })
+            
+             let user=responseData.json();
+             user.then((userData)=>{
+              console.log(`${userData.firstName} ${userData.lastName} is now signed in`)
+              navigate('/authenticated')
+             })
+            
             }
-    
-            else if(responseData.status===400){
-              const data = responseData.json();
-              data.then((errorList)=>{
-                setErrors(errorList.errors);
-          })
+            else if(responseData.status===401){
+              setErrors(['Sign In is unsuccessful'])
+              
+            }
+              
+            
+            
+              else{
+            throw new Error('Something wrong happened')
+          }
         }
-        else{
-          throw new Error();
-        }
-      })}
-      catch(error){
-        console.log(error);
-          navigate('/error');
-      }
-
+      })
+     }catch (error) {
+         
+      console.log(error);
+      navigate('/error');
     }
+}
+
+
+       
+          
+       
+
     const handleCancel = (event) => {
         event.preventDefault();
         navigate('/')
@@ -64,7 +75,7 @@ const UserSignIn=()=>{
                         </ul>
                     </div>
 
-                ) : (null)}
+                ):(<div></div>)}
                 <form onSubmit={handleSubmit}>
                 <label htmlFor="emailAddress">Email Address</label>
                 <input 
