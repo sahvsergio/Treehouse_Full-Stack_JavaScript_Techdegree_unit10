@@ -1,44 +1,39 @@
 import { createContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-const UserContext = createContext(null);
 import { api } from "../apiHelper";
 
-
-
+const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
   const [authUser, setAuthUser] = useState(null);
+
   const signIn = async (credentials) => {
+    try {
+      const response = await api("/users", "GET", null, credentials);
 
-    let response = await api("/users", "GET", null, credentials);
-
-    response.then((responseData) => {
-
-      if (responseData) {
-
-        if (responseData.status === 200) {
-          let user = responseData.json();
-          user.then((userData) => {
-            setAuthUser(userData);
-            return userData.json();
-          });
-        } else if (responseData.status === 401) {
-          return null;
-        }
-    }});
-
+      if (response.status === 200) {
+        const userData = await response.json();
+        setAuthUser(userData);
+        return userData;
+      } else if (response.status === 401) {
+        return null;
+      }
+    } catch (error) {
+      console.error('Sign in error:', error);
+      return null;
+    }
   }
 
-
-return (
-  <UserContext.Provider value={{
+  const contextValue = {
     authUser,
     actions: {
       signIn
     }
-  }}>
-    {props.children}
-  </UserContext.Provider>
-)
+  };
+
+  return (
+    <UserContext.Provider value={contextValue}>
+      {props.children}
+    </UserContext.Provider>
+  )
 }
 export default UserContext  
