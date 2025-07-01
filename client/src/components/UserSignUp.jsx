@@ -1,10 +1,12 @@
-import {useRef, useState} from 'react';
+import {useContext,useRef, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
 
 import { api } from "../apiHelper";
 
 const UserSignUp= ()=>{
+  const {actions}=useContext(UserContext);
   const firstName=useRef(null);
   const lastName=useRef(null);
   const email=useRef(null);
@@ -12,7 +14,7 @@ const UserSignUp= ()=>{
   const[errors, setErrors]=useState([]);
   const navigate = useNavigate()
 
-  const handleSubmit= (event)=>{
+  const handleSubmit=  (event)=>{
 
     event.preventDefault();
     
@@ -27,7 +29,8 @@ const UserSignUp= ()=>{
       response.then((responseData)=>{
 
         if (responseData.status===201){
-          navigate('/');
+          actions.signIn(user)          
+          
         }
 
         else if(responseData.status===400){
