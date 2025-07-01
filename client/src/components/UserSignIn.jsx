@@ -18,7 +18,7 @@ const UserSignIn = () => {
   const [errors, setErrors] = useState([]);
 
 
-  const handleSubmit = (event) =>{
+  const handleSubmit = async (event) =>{
     event.preventDefault();
 
 
@@ -28,7 +28,7 @@ const UserSignIn = () => {
   }
 
   try {
-    const user=actions.UserSignIn(credentials);
+    const user= await actions.signIn(credentials);
     user.then((userData)=>{
 
       console.log(userData.json());

@@ -8,9 +8,9 @@ import { api } from "../apiHelper";
 
 export const UserProvider = (props) => {
   const [authUser, setAuthUser] = useState(null);
-  const signIn = (credentials) => {
+  const signIn = async (credentials) => {
 
-    let response = api("/users", "GET", null, credentials);
+    let response = await api("/users", "GET", null, credentials);
 
     response.then((responseData) => {
 
