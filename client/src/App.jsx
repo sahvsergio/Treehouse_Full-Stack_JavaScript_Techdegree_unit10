@@ -8,6 +8,7 @@ import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+import UserSignOut from './components/UserSignOut';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/courses/create' element={<CreateCourse />} />
         <Route path='/signin' element={<UserSignIn />} />
         <Route path='/signup' element={<UserSignUp />} />
+        <Route path='/signout' element={<UserSignOut />} />
       </Routes>
     </BrowserRouter>
   )

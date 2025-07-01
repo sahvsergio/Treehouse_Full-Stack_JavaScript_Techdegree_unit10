@@ -22,11 +22,16 @@ export const UserProvider = (props) => {
       return null;
     }
   }
+  const signOut =  () => {
+    setAuthUser(null);
+    
+  }
 
   const contextValue = {
     authUser,
     actions: {
-      signIn
+      signIn,
+      signOut
     }
   };
 
