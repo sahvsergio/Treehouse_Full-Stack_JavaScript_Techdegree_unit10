@@ -1,9 +1,52 @@
 import React from "react";
+import { useRef,useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserContext';
+import { api } from "../apiHelper";
+
 
 const CreateCourse = () => {
+    const navigate = useNavigate()
+    const { actions } = useContext(UserContext);
+    let courseTitle=useRef(null);
+    let courseDescription=useRef(null);
+    let estimatedTime=useRef(null);
+    let materialsNeeded=useRef(null);
     
     
+
+    const [errors, setErrors] = useState([]);
+
+
+    const handleSubmit=async (event)=>{
+        event.preventDefault();     
+        let course = {
+            title: courseTitle.current.value,
+            description: courseDescription.current.value,
+            estimatedTime: estimatedTime.current.value,
+            materialsNeeded: materialsNeeded.current.value
+        }
+      
+
+       
+        try{
+            let response= await('/courses', 'POST',course,body, null )
+            console.log(response);
+
+        }
+        catch(error){
+            console.log(error) ;
+
+        }
+
+
+}
     
+    const handleCancel = (event) => {
+        event.preventDefault();
+        navigate('/')
+
+      }
     return (
     <main>
             <div className="wrap">
@@ -34,7 +77,8 @@ const CreateCourse = () => {
                                 <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Create Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                    <button className="button" type="submit">Create Course</button>
+                    <button className="button button-secondary" onClick={handleCancel} >Cancel</button>
                 </form>
             </div>
         </main>

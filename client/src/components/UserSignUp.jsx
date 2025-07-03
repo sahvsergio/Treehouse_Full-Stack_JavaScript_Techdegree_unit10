@@ -29,8 +29,7 @@ const UserSignUp= ()=>{
       response.then((responseData)=>{
 
         if (responseData.status===201){
-          actions.signIn(user)          
-          
+          actions.signIn(user)
         }
 
         else if(responseData.status===400){
@@ -48,11 +47,7 @@ const UserSignUp= ()=>{
       navigate('/error');
   }
 }
-  
 
-
-   
-  
   
   const handleCancel=(event)=>{
     event.preventDefault();
