@@ -30,7 +30,7 @@ const CreateCourse = () => {
 
        
         try{
-            let response= await('/courses', 'POST',course,body, null )
+            let response= await api('/courses', 'POST',course, null )
             console.log(response);
 
         }
@@ -51,13 +51,15 @@ const CreateCourse = () => {
     <main>
             <div className="wrap">
                 <h2>Create Course</h2>
-                <div className="validation--errors">
-                    <h3>Validation Errors</h3>
-                    <ul>
-                        <li>Please provide a value for "Title"</li>
-                        <li>Please provide a value for "Description"</li>
-                    </ul>
-                </div>
+                {errors.length ? (
+                    <div className="validation--errors">
+                        <h3 className="validation--errors">Validation errors</h3>
+                        <ul className="validation--errors">
+                            {errors.map((error, i) => <li className="validation--errors" key={i}>{error}</li>)}
+                        </ul>
+                    </div>
+
+                ) : (null)}
                 <form>
                     <div className="main--flex">
                         <div>
