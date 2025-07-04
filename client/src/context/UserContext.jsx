@@ -12,7 +12,7 @@ export const UserProvider = (props) => {
 
       if (response.status === 200) {
         const userData = await response.json();
-        setAuthUser(userData);
+        setAuthUser({...userData,password:credentials.password});
         return userData;
       } else if (response.status === 401) {
         return null;

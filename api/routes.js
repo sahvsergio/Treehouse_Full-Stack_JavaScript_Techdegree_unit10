@@ -97,7 +97,7 @@ router.post(
   try{
 
 
-    let course = await req.body;
+    let course =  req.body;
    
     if (!course) {
       
