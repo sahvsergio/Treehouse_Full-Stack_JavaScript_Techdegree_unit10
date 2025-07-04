@@ -12,7 +12,7 @@ const CreateCourse = () => {
     let courseDescription = useRef(null);
     let estimatedTime = useRef(null);
     let materialsNeeded = useRef(null);
-    console.log(authUser);
+    
    
     const [errors, setErrors] = useState([]);
     
@@ -22,17 +22,8 @@ const CreateCourse = () => {
 
        
         event.preventDefault();
-        if (!authUser) {
-            navigate('/signin');
-
-        }
-        else {
-            const credentials = {
-                emailAddress: authUser.emailAddress,
-                password: authUser.password
-            }
-            console.log("Credentials being sent:", credentials);
-        }
+        
+        
     
         let course = {
             title: courseTitle.current.value,
@@ -46,22 +37,37 @@ const CreateCourse = () => {
 
 
         try {
+            if (!authUser) {
+                navigate('/signin');
+            }
+            else{
+
+            
+            let credentials = {
+                 emailAddress: authUser.emailAddress,
+                 password: authUser.password}
+                console.log("Credentials being sent:", credentials);
             
             let response = await api('/courses', 'POST', course,credentials)
             if(response.status===201){
             console.log({response})
-        }else if(response.status===400){
+        }else if(response.status===401){
             const data=await response.json();
             setErrors(data.errors);
         
         }
+            else if (response.status === 400) {
+                const data = await response.json();
+                setErrors(data.errors);
+
+            }
         else{
             throw new Error();
         }
             
 
             
-
+    }
         }
         catch (error) {
             console.log(error);
