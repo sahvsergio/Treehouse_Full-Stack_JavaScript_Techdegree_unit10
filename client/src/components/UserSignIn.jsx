@@ -1,7 +1,7 @@
 import React from "react"
 import { useRef, useContext } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import UserContext from "../context/UserContext";
 
 const UserSignIn = () => {
@@ -9,11 +9,16 @@ const UserSignIn = () => {
   const context = useContext(UserContext);
   const { actions } = context || {};
   const navigate = useNavigate()
+  const location=useLocation()
   const email = useRef(null);
   const password = useRef(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    let from='/';
+    if(location.state){
+      from=location.state.from;
+    }
 
 
     const credentials = {
@@ -24,7 +29,7 @@ const UserSignIn = () => {
     try {
       const user = await actions.signIn(credentials)
       if (user) {
-        navigate('/');
+        navigate(from);
       }
     } catch (error) {
       console.log(error);
