@@ -32,7 +32,7 @@ const CreateCourse = () => {
             materialsNeeded: materialsNeeded.current.value,
             userId:authUser.id
         }
-        console.log({course});
+       
 
 
 

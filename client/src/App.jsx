@@ -17,6 +17,8 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 import PrivateRoute from './components/PrivateRoute';
+import UpdateCourse from './components/UpdateCourse';
+
 
 const App = () => {
   return (
@@ -31,7 +33,7 @@ const App = () => {
         <Route path='/signout' element={<UserSignOut />} />
         <Route element={<PrivateRoute/>}>
           <Route path='/courses/create' element={<CreateCourse />} />
-          <Route path='/courses/create' element={<UpdateCourse />} />
+          <Route path='/courses/:id/update' element={<UpdateCourse />} />
         </Route>
       </Routes>
     </BrowserRouter>
