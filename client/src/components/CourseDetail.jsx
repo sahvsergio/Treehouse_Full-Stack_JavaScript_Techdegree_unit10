@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 
 
 import { useParams, Link } from 'react-router-dom';
@@ -6,8 +6,11 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
 import { api } from '../apiHelper';
+import UserContext from '../context/UserContext';
+
 
 const CourseDetail = () => {
+    const authUser=useContext(UserContext);
     const { id } = useParams();
     const [course, setCourse] = useState(null);
     const [error, setError] = useState(null);
@@ -29,8 +32,14 @@ const CourseDetail = () => {
         <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                    <button className="button">Delete Course</button>
+                    {authUser?.emailAddress === course.User?.emailAddress && (
+                        <>
+                            <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
+                            <button className="button">Delete Course</button>
+                        </>
+                    )}
+
+
                     <Link className="button button-secondary" to="/">Return to List</Link>
                 </div>
             </div>
