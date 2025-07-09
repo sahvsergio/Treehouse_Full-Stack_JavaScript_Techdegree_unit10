@@ -11,13 +11,15 @@ import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
+import PrivateRoute from './components/PrivateRoute';
+import UpdateCourse from './components/UpdateCourse';
+
 
 //User Components 
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
-import PrivateRoute from './components/PrivateRoute';
-import UpdateCourse from './components/UpdateCourse';
+
 
 
 const App = () => {

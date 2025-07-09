@@ -12,7 +12,7 @@ export const UserProvider = (props) => {
 
       if (response.status === 200) {
         const userData = await response.json();
-        setAuthUser({...userData,password:credentials.password});
+        setAuthUser({ ...userData, password: credentials.password });
         return userData;
       } else if (response.status === 401) {
         return null;
@@ -22,9 +22,9 @@ export const UserProvider = (props) => {
       return null;
     }
   }
-  const signOut =  () => {
+  const signOut = () => {
     setAuthUser(null);
-    
+
   }
 
   const contextValue = {
@@ -41,4 +41,4 @@ export const UserProvider = (props) => {
     </UserContext.Provider>
   )
 }
-export default UserContext  
+export default UserContext  ;

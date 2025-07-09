@@ -4,18 +4,24 @@ import UserContext from '../context/UserContext';
 import { api } from "../apiHelper";
 
 const UpdateCourse = () => {
+    // Set context to extract user info
     const { authUser } = useContext(UserContext);
+    
+    // Set Inital states and  setters for errors and courses
     const [errors, setErrors] = useState([]);
     const [course, setCourse] = useState(null);
 
+
+    // reference fields 
     const courseTitle = useRef(null);
     const courseDescription = useRef(null);
     const estimatedTime = useRef(null);
     const materialsNeeded = useRef(null);
 
+    //fetching course id from url
     const { id } = useParams();
     const navigate = useNavigate();
-
+    //use effect to fetch current course data  from the api helper
     useEffect(() => {
         api(`/courses/${id}`)
             .then(res => res.json())
@@ -28,6 +34,7 @@ const UpdateCourse = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
         let credentials = {
             emailAddress: authUser.emailAddress,
             password: authUser.password

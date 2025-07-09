@@ -30,6 +30,7 @@ const UserSignUp= ()=>{
 
         if (responseData.status===201){
           actions.signIn(user)
+          navigate('/');
         }
 
         else if(responseData.status===400){

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 
 import { useParams, Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import UserContext from '../context/UserContext';
 
 
 const CourseDetail = () => {
-    const authUser=useContext(UserContext);
+    const {authUser} = useContext(UserContext);
     const { id } = useParams();
     const [course, setCourse] = useState(null);
     const [error, setError] = useState(null);
@@ -18,7 +18,11 @@ const CourseDetail = () => {
     useEffect(() => {
         api(`/courses/${id}`)
             .then(res => res.json())
-            .then(data => setCourse(data))
+
+            .then((data) =>{
+                console.log("Course data:", data); 
+                setCourse(data);
+            })
             .catch(err => {
                 console.error('Failed to load course:', err);
                 setError('Error loading course');
@@ -27,20 +31,21 @@ const CourseDetail = () => {
 
     if (error) return <p>{error}</p>;
     if (!course) return <p>Loading...</p>;
+ 
 
     return (
         <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    {authUser?.emailAddress === course.User?.emailAddress && (
+                    {authUser && course.userId === authUser.id && (
                         <>
                             <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
                             <button className="button">Delete Course</button>
                         </>
                     )}
 
-
                     <Link className="button button-secondary" to="/">Return to List</Link>
+
                 </div>
             </div>
 
