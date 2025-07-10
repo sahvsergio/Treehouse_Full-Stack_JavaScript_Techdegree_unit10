@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 
 
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 import ReactMarkdown from 'react-markdown';
 
@@ -10,10 +10,11 @@ import UserContext from '../context/UserContext';
 
 
 const CourseDetail = () => {
+    const navigate=useNavigate()
     const {authUser} = useContext(UserContext);
     const { id } = useParams();
     const [course, setCourse] = useState(null);
-    const [error, setError] = useState(null);
+    const [error, setErrors] = useState(null);
 
     useEffect(() => {
         api(`/courses/${id}`)
@@ -25,9 +26,38 @@ const CourseDetail = () => {
             })
             .catch(err => {
                 console.error('Failed to load course:', err);
-                setError('Error loading course');
+                setErrors('Error loading course');
             });
     }, [id]);
+
+    
+    const deleteCourse=async ()=>{
+        let credentials = {
+            emailAddress: authUser.emailAddress,
+            password: authUser.password
+        }
+          api(`/courses/${id}`, 'DELETE', null, credentials, )
+                     .then(res => {
+                         if (res.status === 204) {
+                             navigate('/');
+                         } else if (res.status === 400) {
+                             return res.json().then(data => setErrors(data.errors));
+                         } else {
+                             throw new Error('Something went wrong');
+                         }
+                     })
+                     .catch(err => {
+                         console.error('Course Deletion failed:', err);
+                         setErrors(['Failed to delete  course']);
+                     });
+             };
+         
+             if (!course) {
+                 return <p>Loading course details...</p>;
+             }
+         
+    
+
 
     if (error) return <p>{error}</p>;
     if (!course) return <p>Loading...</p>;
@@ -40,7 +70,7 @@ const CourseDetail = () => {
                     {authUser && course.userId === authUser.id && (
                         <>
                             <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                            <button className="button">Delete Course</button>
+                            <button className="button" onClick={deleteCourse}>Delete Course</button>
                         </>
                     )}
 
