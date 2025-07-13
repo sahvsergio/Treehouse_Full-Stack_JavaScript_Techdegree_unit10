@@ -5,7 +5,7 @@ import { useNavigate,useLocation } from 'react-router-dom';
 import UserContext from "../context/UserContext";
 
 const UserSignIn = () => {
-
+// sign in states
   const context = useContext(UserContext);
   const { actions } = context || {};
   const navigate = useNavigate()
@@ -15,20 +15,28 @@ const UserSignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    //start at root by default  
+    {/*  */ } 
     let from='/';
+    
     if(location.state){
+      // assign the new lcoation 
       from=location.state.from;
     }
 
-
+    // receive credentials 
     const credentials = {
       emailAddress: email.current.value,
       password: password.current.value
     }
 
     try {
+      //attempt sign in by validating credentials
       const user = await actions.signIn(credentials)
+
+      // if  credentials are valid 
       if (user) {
+        {/* navigate to their location  */ } 
         navigate(from);
       }
     } catch (error) {
@@ -44,6 +52,7 @@ const UserSignIn = () => {
 
 
   return (<>
+   
     <main>
       <div className="form--centered">
         <h2>Sign In</h2>

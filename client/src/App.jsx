@@ -27,12 +27,14 @@ const App = () => {
     <BrowserRouter>
       <Header />
       <Routes>
+        {/* Not protected routes  */} 
         <Route path='/' element={<Courses />} />
         <Route path='/courses/:id' element={<CourseDetail />} />
        
         <Route path='/signin' element={<UserSignIn />} />
         <Route path='/signup' element={<UserSignUp />} />
         <Route path='/signout' element={<UserSignOut />} />
+        {/* protected routes  by sign in */} 
         <Route element={<PrivateRoute/>}>
           <Route path='/courses/create' element={<CreateCourse />} />
           <Route path='/courses/:id/update' element={<UpdateCourse />} />

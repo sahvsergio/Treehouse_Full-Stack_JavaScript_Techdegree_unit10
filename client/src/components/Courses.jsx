@@ -25,6 +25,7 @@ const Courses = () => {
     return (
         <main>
             <div className="wrap main--grid">
+                {/*When the course length is higher than 0, we display all courses  */} 
                 {courses.length > 0 ? (
                     courses.map(course => (
                         <Link

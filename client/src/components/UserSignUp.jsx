@@ -6,12 +6,18 @@ import UserContext from '../context/UserContext';
 import { api } from "../apiHelper";
 
 const UserSignUp= ()=>{
+  // grab the userContext
   const {actions}=useContext(UserContext);
+
+  // get user data to be created from form 
   const firstName=useRef(null);
   const lastName=useRef(null);
   const email=useRef(null);
   const password=useRef(null);
+
+  //set erros variable 
   const[errors, setErrors]=useState([]);
+
   const navigate = useNavigate()
 
   const handleSubmit=  (event)=>{
@@ -19,22 +25,26 @@ const UserSignUp= ()=>{
     event.preventDefault();
     
     const user={
+      // get the new user info from the form inputs
       firstName:firstName.current.value,
       lastName:lastName.current.value,
       emailAddress:email.current.value,
       password:password.current.value
     }
     try{ 
+      //post the user data to the api
       let response= api('/users','POST',user );
       response.then((responseData)=>{
-
+        // if successfully created 
         if (responseData.status===201){
+          //sign the user in and navigate to home page 
           actions.signIn(user)
           navigate('/');
         }
-
+        //if errors in form 
         else if(responseData.status===400){
           const data = responseData.json();
+          //set the error variable data 
           data.then((errorList)=>{
             setErrors(errorList.errors);
       })

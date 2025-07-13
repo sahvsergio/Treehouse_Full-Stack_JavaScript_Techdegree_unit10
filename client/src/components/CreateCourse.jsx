@@ -6,6 +6,7 @@ import { api } from "../apiHelper";
 
 
 const CreateCourse = () => {
+    //Prepare the intial settings and states 
     const navigate = useNavigate()
     const { authUser } = useContext(UserContext);
     let courseTitle = useRef(null);
@@ -24,7 +25,7 @@ const CreateCourse = () => {
         event.preventDefault();
         
         
-    
+        //get the body of the request with new info 
         let course = {
             title: courseTitle.current.value,
             description: courseDescription.current.value,
@@ -35,32 +36,43 @@ const CreateCourse = () => {
        
 
 
-
+        //
         try {
+            //if no user autthenticated, show sign in
             if (!authUser) {
                 navigate('/signin');
             }
             else{
+                //else user is authenticated
 
-            
+            //set credentials for api call 
             let credentials = {
                  emailAddress: authUser.emailAddress,
                  password: authUser.password}
-                console.log("Credentials being sent:", credentials);
-            
+              
+            //call the api with authenticated credentials 
             let response = await api('/courses', 'POST', course,credentials)
             if(response.status===201){
+                //log the new course info to the console.
             console.log({response})
+            
+
+         // if user is not authenticated    
         }else if(response.status===401){
+
+             // gather error data and set the error state
             const data=await response.json();
             setErrors(data.errors);
         
         }
+            //validation errors ex: no  email, wrong format, etc 
             else if (response.status === 400) {
                 const data = await response.json();
+                //set errors 
                 setErrors(data.errors);
 
             }
+            //anything else happens
         else{
             throw new Error();
         }
@@ -78,14 +90,20 @@ const CreateCourse = () => {
     }
 
     const handleCancel = (event) => {
+        // 
         event.preventDefault();
-        navigate('/')
+        navigate('/')//navigate to root 
 
     }
     return (
         <main>
+            {/* Check if authenticated user exists */} 
+
             {authUser ? (<div className="wrap">
                 <h2>Create Course</h2>
+                {/* Check if authenticated user exists */} 
+                
+                {/*If errors exists, display validation errors  */} 
                 {errors.length ? (
                     <div className="validation--errors">
                         <h3 className="validation--errors">Validation errors</h3>
@@ -97,6 +115,7 @@ const CreateCourse = () => {
                 ) : (null)}
 
                 <form onSubmit={handleSubmit}>
+                    
                     <div className="main--flex">
                         <div>
                             <label htmlFor="courseTitle">Course Title</label>

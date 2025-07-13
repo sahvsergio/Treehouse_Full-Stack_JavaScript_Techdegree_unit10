@@ -34,11 +34,12 @@ const UpdateCourse = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+        //setting credential before submission
         let credentials = {
             emailAddress: authUser.emailAddress,
             password: authUser.password
         }
+        //Grab all the updated info for the course from the form
 
         const updatedCourse = {
             title: courseTitle.current.value,
@@ -46,11 +47,15 @@ const UpdateCourse = () => {
             estimatedTime: estimatedTime.current.value,
             materialsNeeded: materialsNeeded.current.value
         };
-
+        
+        
+        // call the api route for course update, including credentials
         api(`/courses/${id}`, 'PUT', updatedCourse, credentials, )
             .then(res => {
+                // if the course is udpated,
                 if (res.status === 204) {
                     navigate(`/courses/${id}`);
+                //bad requests 
                 } else if (res.status === 400) {
                     return res.json().then(data => setErrors(data.errors));
                 } else {
@@ -62,7 +67,7 @@ const UpdateCourse = () => {
                 setErrors(['Failed to update course']);
             });
     };
-
+    //if there is no course
     if (!course) {
         return <p>Loading course details...</p>;
     }
@@ -71,14 +76,19 @@ const UpdateCourse = () => {
         <main>
             <div className="wrap">
                 <h2>Update Course</h2>
+                {/* Show validation errors if any  */} 
+               
                 {errors.length > 0 && (
+                    
                     <div className="validation--errors">
                         <h3>Validation Errors</h3>
+                        
                         <ul>
                             {errors.map((err, index) => <li key={index}>{err}</li>)}
                         </ul>
                     </div>
                 )}
+                {/* redirect to sign in page  */} 
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">
                         <div>
